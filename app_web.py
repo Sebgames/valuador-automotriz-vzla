@@ -1,4 +1,14 @@
 import streamlit as st
+# Esto vincula el archivo manifest para que el celular permita "instalar" la app
+st.markdown(
+    """
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="ValuadorVzla">
+    """,
+    unsafe_allow_html=True,
+)
 import valuador_inteligente as vi
 import time
 
@@ -65,5 +75,6 @@ with tab2:
         
         st.write(f"**Análisis:** {msj}")
         st.metric("Valor Sugerido", f"${v_ref:,.2f}", delta=f"{precio_oferta - v_ref:,.2f} USD", delta_color="inverse")
+
 
 st.sidebar.caption("Soporte Técnico: Consultoría Automotriz v1.0")
