@@ -1,67 +1,58 @@
-import streamlit as st
-import motor_logico as ml
+def cargar_inventario():
+    return {
+        'Toyota': {
+            'Corolla': {
+                'checkpoints': [(2002, 10500), (2008, 14500), (2014, 21000), (2020, 35000), (2026, 48000)],
+                'versiones': {'XLI': 0.9, 'GLI': 1.0, 'SEG': 1.15}, 'factor': 0.98},
+            'Yaris': {
+                'checkpoints': [(2005, 10800), (2011, 14500), (2026, 32000)],
+                'versiones': {'Versión E': 0.9, 'Versión G': 1.0, 'Sport': 1.15}, 'factor': 0.97},
+            'Fortuner': {
+                'checkpoints': [(2015, 45000), (2020, 68000), (2026, 98000)],
+                'versiones': {'SR5': 1.0, 'Diamond': 1.25}, 'factor': 0.985},
+            'Hilux': {
+                'checkpoints': [(2005, 22000), (2015, 42000), (2026, 85000)],
+                'versiones': {'SR': 1.0, 'Kavak': 1.25, 'Revo': 1.4}, 'factor': 0.98},
+            '4Runner': {
+                'checkpoints': [(2009, 28000), (2019, 65000), (2026, 135000)],
+                'versiones': {'SR5': 1.0, 'Limited': 1.25}, 'factor': 0.985}
+        },
+        'Chevrolet': {
+            'Silverado': {
+                'checkpoints': [(2007, 18000), (2014, 32000), (2026, 98000)],
+                'versiones': {'LS': 0.9, 'LT': 1.0, 'LTZ': 1.2}, 'factor': 0.98},
+            'Aveo': {
+                'checkpoints': [(2018, 12500), (2026, 28000)],
+                'versiones': {'LT': 1.0, 'LTZ': 1.15}, 'factor': 0.97}
+        },
+        'Hyundai': {
+            'Getz': {'checkpoints': [(2012, 11500)], 'versiones': {'1.3 GL': 0.9, '1.6 GLS': 1.0}, 'factor': 0.97},
+            'Tucson': {'checkpoints': [(2009, 14500), (2026, 55000)], 'versiones': {'GLS': 1.0, 'Limited': 1.2}, 'factor': 0.975}
+        }
+    }
 
-st.set_page_config(page_title="Valuador Automotriz", layout="centered")
-
-st.title("💎 Valuador Lord Flores")
-inv = ml.cargar_inventario()
-
-tab1, tab2 = st.tabs(["📊 Calculadora", "💰 ¿Vale la pena comprarlo?"])
-
-with tab1:
-    st.subheader("Estimación de Precio Real")
-    c1, c2 = st.columns(2)
-    with c1:
-        marca = st.selectbox("Marca", sorted(inv.keys()), key="m1")
-        modelo = st.selectbox("Modelo", sorted(inv[marca].keys()), key="mo1")
-        anio = st.number_input("Año", 1990, 2026, 2015, key="a1")
-    with c2:
-        opciones_v = list(inv[marca][modelo]['versiones'].keys())
-        version = st.selectbox("Versión", opciones_v, key="v1")
-        km = st.number_input("Kilometraje", 0, 1000000, 100000, key="k1")
-
-    with st.expander("🛠️ Detalles Técnicos"):
-        c3, c4 = st.columns(2)
-        with c3:
-            choque = st.checkbox("¿Reporta Choque?")
-            mecanica = st.checkbox("¿Falla Mecánica?")
-        with c4:
-            pintura = st.checkbox("¿Detalles Pintura?")
-            duenos = st.slider("Dueños", 1, 6, 2)
-
-    if st.button("CALCULAR"):
-        res = ml.calcular_valor_final(marca, modelo, version, anio, km, duenos, "Sí" if choque else "No", pintura, mecanica)
-        st.success(f"## Valor en Calle: $ {res:,.2f} USD")
-
-with tab2:
-    st.subheader("Veredicto de Compra")
-    st.write("Dinos qué te ofrecen y te diremos si es un buen negocio.")
+def calcular_valor_final(marca, modelo, version, anio, km, duenos, choque, e, m):
+    inv = cargar_inventario()
+    if marca not in inv or modelo not in inv[marca]: return 0
+    data = inv[marca][modelo]
     
-    col1, col2 = st.columns(2)
-    with col1:
-        m_ia = st.selectbox("Marca", sorted(inv.keys()), key="m2")
-        mo_ia = st.selectbox("Modelo", sorted(inv[m_ia].keys()), key="mo2")
-        a_ia = st.number_input("Año", 1990, 2026, 2015, key="a2")
-    with col2:
-        op_v_ia = list(inv[m_ia][mo_ia]['versiones'].keys())
-        v_ia = st.selectbox("Versión", op_v_ia, key="v2")
-        precio_oferta = st.number_input("¿Cuánto te piden? ($)", 0.0)
-
-    if st.button("¿VALE LA PENA?"):
-        # Calculamos el valor real internamente para comparar
-        v_real = ml.calcular_valor_final(m_ia, mo_ia, v_ia, a_ia, 100000, 2, "No", False, False)
-        
-        diff = ((precio_oferta - v_real) / v_real) * 100
-        
-        if diff < -8:
-            st.balloons()
-            st.success(f"### 💎 ¡ES UNA GANGA!")
-            st.write(f"El carro vale aprox. ${v_real:,.0f}. Te ahorras un {abs(diff):.1f}%.")
-        elif diff <= 6:
-            st.info(f"### ✅ PRECIO JUSTO")
-            st.write("Está en el rango correcto de mercado.")
-        else:
-            st.error(f"### 🚨 NO VALE LA PENA")
-            st.write(f"Está muy caro. El valor real es de ${v_real:,.0f}. Tienes un sobreprecio del {diff:.1f}%.")
-
-st.sidebar.caption("Puerto Cabello Edition 2026")
+    precio_tope = 0
+    for anio_limite, precio in data['checkpoints']:
+        if anio <= anio_limite:
+            precio_tope = precio
+            break
+    
+    valor = precio_tope * data['versiones'].get(version, 1.0)
+    
+    # Depreciación por año (Año actual 2026)
+    antiguedad = 2026 - anio
+    valor *= (data['factor'] ** antiguedad)
+    
+    # Castigos por detalles (ajustados para no bajar tanto el precio)
+    if km > 150000: valor *= 0.95
+    if duenos > 3: valor *= 0.96
+    if choque == "Sí": valor *= 0.75
+    if e: valor *= 0.95 # Pintura
+    if m: valor *= 0.92 # Mecánica
+    
+    return round(valor, 2)
