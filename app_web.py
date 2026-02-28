@@ -1,69 +1,61 @@
 import streamlit as st
 import motor_logico as ml
-import time
 
-st.set_page_config(page_title="Valuador Automotriz Pro", page_icon="💎", layout="centered")
+st.set_page_config(page_title="Valuador Lord Flores", layout="centered")
 
-st.markdown("""
-    <style>
-    .stApp { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #f8fafc; }
-    .glass-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 20px; padding: 25px; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 20px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
-    .stButton>button { width: 100%; border-radius: 15px; height: 3.5em; background: linear-gradient(90deg, #1e3799, #0984e3); color: white; font-weight: bold; border: none; }
-    </style>
-    """, unsafe_allow_html=True)
-
-st.title("💎 Valuador Inteligente")
-st.caption("Análisis de Mercado & Veredicto de Oferta")
-
+st.title("💎 Valuador Automotriz Pro")
 inv = ml.cargar_inventario()
 
-with st.container():
-    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+# --- PESTAÑAS SEPARADAS ---
+tab1, tab2 = st.tabs(["📊 Calculadora de Valor", "🔍 Análisis de Oferta IA"])
+
+with tab1:
+    st.subheader("Paso 1: Calcular Valor Real")
     c1, c2 = st.columns(2)
     with c1:
-        marca = st.selectbox("Marca", sorted(inv.keys()))
-        modelo = st.selectbox("Modelo", sorted(inv[marca].keys()))
-        anio = st.number_input("Año", 1990, 2026, 2018)
+        marca = st.selectbox("Marca", sorted(inv.keys()), key="m1")
+        modelo = st.selectbox("Modelo", sorted(inv[marca].keys()), key="mo1")
+        anio = st.number_input("Año", 1990, 2026, 2015)
     with c2:
-        opciones_v = list(inv[marca][modelo].keys())
-        if 'factor' in opciones_v: opciones_v.remove('factor')
+        opciones_v = list(inv[marca][modelo]['versiones'].keys())
         version = st.selectbox("Versión", opciones_v)
-        precio_vendedor = st.number_input("Precio que te piden ($)", 0, 500000, 10000)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with st.expander("🛠️ Detalles del Vehículo"):
-    c3, c4 = st.columns(2)
-    with c3:
-        km = st.number_input("Kilometraje", 0, 1000000, 80000)
-        duenos = st.slider("Dueños", 1, 6, 1)
-    with c4:
-        choque = st.checkbox("¿Tuvo choques?")
-        estetico = st.checkbox("Detalles Pintura")
-        mecanico = st.checkbox("Detalles Mecánicos")
-
-if st.button("✨ REALIZAR ANÁLISIS COMPLETO"):
-    with st.status("🔮 Consultando base de datos...", expanded=False) as s:
-        time.sleep(1)
-        res_real = ml.calcular_valor_final(marca, modelo, version, anio, km, duenos, "Sí" if choque else "No", estetico, mecanico)
-        titulo_ia, desc_ia, color_ia = ml.analizar_oferta(res_real, precio_vendedor)
-        s.update(label="✅ Análisis IA Finalizado", state="complete")
-
-    st.balloons()
     
-    # Mostrar Valor Real
-    st.markdown(f"""
-        <div style="text-align: center; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 15px; margin-bottom: 15px;">
-            <p style="margin:0; color:#bdc3c7;">VALOR REAL ESTIMADO</p>
-            <h2 style="margin:0; color:#fff;">$ {res_real:,.2f} USD</h2>
-        </div>
-    """, unsafe_allow_html=True)
+    with st.expander("🛠️ Detalles de Estado Actual"):
+        c3, c4 = st.columns(2)
+        km = st.number_input("Kilometraje", 0, 1000000, 100000)
+        with c3:
+            choque = st.checkbox("¿Tuvo choques?")
+            mecanica = st.checkbox("Fallas de Motor/Caja")
+        with c4:
+            pintura = st.checkbox("Detalles de Pintura")
+            duenos = st.slider("Dueños", 1, 6, 2)
 
-    # Mostrar Veredicto IA
-    st.markdown(f"""
-        <div style="text-align: center; padding: 25px; background: {color_ia}22; border-radius: 20px; border: 2px solid {color_ia};">
-            <h2 style="color: {color_ia}; margin-top:0;">{titulo_ia}</h2>
-            <p style="color: #f8fafc; font-size: 16px;">{desc_ia}</p>
-        </div>
-    """, unsafe_allow_html=True)
+    if st.button("CALCULAR VALOR"):
+        resultado = ml.calcular_valor_final(marca, modelo, version, anio, km, duenos, "Sí" if choque else "No", pintura, mecanica)
+        st.session_state['valor_calculado'] = resultado
+        st.success(f"### Valor Sugerido: $ {resultado:,.2f} USD")
 
-st.sidebar.markdown("👑 **Lord Flores Edition**")
+with tab2:
+    st.subheader("Paso 2: ¿Es un buen negocio?")
+    st.write("Usa esta herramienta para saber si el precio que te piden es justo.")
+    
+    col_a, col_b = st.columns(2)
+    with col_a:
+        v_real = st.number_input("Valor de Mercado ($)", value=st.session_state.get('valor_calculado', 0.0))
+    with col_b:
+        v_pide = st.number_input("Precio que te piden ($)", value=0.0)
+
+    if st.button("OBTENER VEREDICTO"):
+        if v_real > 0 and v_pide > 0:
+            diff = ((v_pide - v_real) / v_real) * 100
+            if diff < -10:
+                st.balloons()
+                st.markdown(f"<h2 style='color: #2ecc71;'>💎 OFERTA DIAMANTE</h2>", unsafe_allow_html=True)
+                st.write(f"¡Cómpralo! El precio es un {abs(diff):.1f}% más bajo que el mercado.")
+            elif diff <= 7:
+                st.markdown(f"<h2 style='color: #3498db;'>✅ PRECIO JUSTO</h2>", unsafe_allow_html=True)
+            else:
+                st.markdown(f"<h2 style='color: #e74c3c;'>🚨 SOBREPRECIO</h2>", unsafe_allow_html=True)
+                st.write(f"Cuidado, estás pagando un {diff:.1f}% por encima del valor.")
+        else:
+            st.warning("Asegúrate de tener ambos precios para analizar.")
