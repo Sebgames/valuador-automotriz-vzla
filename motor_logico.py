@@ -2,7 +2,7 @@ def cargar_inventario():
     return {
         'Toyota': {
             'Corolla': {
-                'checkpoints': [(2002, 10500), (2008, 14500), (2014, 21000), (2020, 35000), (2026, 48000)],
+                'checkpoints': [(2002, 10500), (2008, 14500), (2014, 23000), (2020, 35000), (2026, 48000)],
                 'versiones': {'XLI': 0.9, 'GLI': 1.0, 'SEG': 1.15}, 'factor': 0.98},
             'Yaris': {
                 'checkpoints': [(2005, 10800), (2011, 14500), (2026, 32000)],
@@ -49,10 +49,11 @@ def calcular_valor_final(marca, modelo, version, anio, km, duenos, choque, e, m)
     valor *= (data['factor'] ** antiguedad)
     
     # Castigos por detalles (ajustados para no bajar tanto el precio)
-    if km > 150000: valor *= 0.95
-    if duenos > 3: valor *= 0.96
+    if km > 150000: valor *= 0.90
+    if duenos > 2: valor *= 0.85
     if choque == "Sí": valor *= 0.75
     if e: valor *= 0.95 # Pintura
     if m: valor *= 0.92 # Mecánica
     
     return round(valor, 2)
+
