@@ -1,7 +1,7 @@
 def cargar_inventario():
     return {
         'Toyota': {
-            'Corolla': {'checkpoints': [(2002, 11500), (2008, 16000), (2014, 23000), (2020, 38000), (2026, 52000)],
+            'Corolla': {'checkpoints': [(2002, 11500), (2008, 16000), (2014, 25000), (2020, 38000), (2026, 52000)],
                         'versiones': {'XLI': 1.0, 'GLI': 1.0, 'SEG': 1.18}, 'factor': 0.98},
             'Yaris': {'checkpoints': [(2005, 11800), (2011, 16500), (2026, 35000)],
                       'versiones': {'Versión E': 0.9, 'Versión G': 1.0, 'Sport': 1.2}, 'factor': 0.975},
@@ -35,8 +35,9 @@ def calcular_valor_final(marca, modelo, version, anio, km, duenos, choque, e, m)
     
     # Desgaste por uso (Castigos suaves pero realistas)
     if km > 140000: valor *= 0.96
-    if duenos > 1: valor *= 0.93
+    if duenos > 1: valor *= 0.96
     if choque == "Sí": valor *= 0.75
     if e: valor *= 0.95 
     if m: valor *= 0.90 
     return round(valor, 2)
+
