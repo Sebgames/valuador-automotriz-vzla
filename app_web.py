@@ -46,7 +46,7 @@ if df is not None:
             if v_real > 0:
                 diff = ((p_oferta - v_real) / v_real) * 100
                 st.divider()
-                st.write(f"Valor de mercado según Lord Flores: **${v_real:,.0f}**")
+                st.write(f"Valor de mercado REAL: **${v_real:,.0f}**")
                 
                 if diff < -10:
                     st.success(f"### 🔥 ¡OFERTA DETECTADA! (Ahorras {abs(diff):.1f}%)")
@@ -64,4 +64,5 @@ else:
     st.info("Verifique que el archivo en GitHub no tenga punto y coma (;) y use comas (,).")
 
 st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva ")
+
 
