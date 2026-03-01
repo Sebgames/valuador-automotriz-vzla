@@ -9,7 +9,7 @@ st.markdown("#### Portal creado y diseñado para encontrar el precio correcto de
 
 st.markdown(f"""
     <head>
-        <meta name="google-site-verification" content="<meta name="google-site-verification" content="MqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I" />" />
+        <meta name="google-site-verification" content="MqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I" />
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
         <meta name="apple-mobile-web-app-title" content="Lord Valuador">
@@ -120,6 +120,7 @@ else:
     st.info("Verifique que el archivo en GitHub no tenga punto y coma (;) y use comas (,).")
 
 st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva ")
+
 
 
 
