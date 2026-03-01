@@ -151,13 +151,18 @@ Toyota,Fortuner,2011,40000
 Toyota,Fortuner,2010,31500
 Toyota,Fortuner,2008,27000
 Toyota,Fortuner,2007,22900
-Toyota,Prado,2025,139000
-Toyota,Prado,2024,115000
-Toyota,Prado,2018,90000
+Toyota,Prado 2.7,2025,98000
+Toyota,Prado 2.7,2025,89000
+Toyota,Prado,2024,98000
+Toyota,Prado,2023,91000
+Toyota,Prado,2022,86000
+Toyota,Prado,2021,81000
+Toyota,Prado,2018,72000
 Toyota,Prado,2006,24500
-Toyota,Land Cruiser 300,2026,180000
-Toyota,Land Cruiser 300,2025,170000
-Toyota,Land Cruiser 300,2023,155000
+Toyota,Land Cruiser 300,2026,165000
+Toyota,Land Cruiser 300,2025,150000
+Toyota,Land Cruiser 300,2024,138000
+Toyota,Land Cruiser 300,2023,125000
 Toyota,Rav4,2025,59000
 Toyota,Camry,2025,61000
 Toyota,Frontlander,2025,45900
@@ -165,7 +170,7 @@ Toyota,Urban Cruiser,2025,49000
 Toyota,Sequoia,2026,179500
 Toyota,Sequoia,2025,173900
 Toyota,Agya,2026,26000
-Toyota,Agya,2025,26770
+Toyota,Agya,2025,24500
 Kia,Sportage,2026,48500
 Kia,Sportage,2025,43500
 Kia,Sportage,2016,21888
@@ -209,4 +214,5 @@ JAC,Nevado,2026,35000
 JAC,Savanna,2026,46900
 JAC,Savanna,2025,40500
 JAC,J7,2025,29990
+
 
