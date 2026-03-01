@@ -51,9 +51,10 @@ def calcular_valor_final(marca, modelo, version, anio, km, duenos, choque, e, m)
     valor *= multiplicador
     
     # Castigos de estado (Estilo Lord Flores: Justos pero realistas)
-    if km > 150000: valor *= 0.97
+    if km > 25000: valor *= 0.97
     if choque == "Sí": valor *= 0.80
     if e: valor *= 0.96 # Pintura
     if m: valor *= 0.92 # Mecánica
     
     return round(valor, 2)
+
