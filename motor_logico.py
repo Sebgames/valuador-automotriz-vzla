@@ -1,19 +1,22 @@
 import pandas as pd
 
 def cargar_inventario_excel():
-    """Lee la base de datos de precios desde el archivo CSV"""
     try:
-        # Intenta leer el archivo que usted subirá a GitHub
-        df = pd.read_csv('precios.csv')
-        # Limpia espacios por si acaso
+        # Ajustado para leer punto y coma (;) que es como sale de su Excel
+        df = pd.read_csv('precios.csv', sep=';')
+        
+        # Limpiamos los nombres de las columnas
         df.columns = df.columns.str.strip()
+        
+        # MAGIA: Convertimos sus precios (ej: 24.900) a números reales (24900)
+        # Quitamos el punto y lo convertimos a número
+        df['precio_tope'] = df['precio_tope'].astype(str).str.replace('.', '', regex=False).astype(float)
+        
         return df
     except Exception as e:
-        # Si el archivo no existe o está mal formado, devuelve None
         return None
 
 def obtener_versiones():
-    """Super Data de versiones y sus potenciadores de precio"""
     return {
         'Corolla': {'XLI': 0.90, 'GLI': 1.00, 'SEG': 1.15},
         'Yaris': {'Versión E': 0.85, 'Versión G': 1.00, 'Sport': 1.10},
@@ -25,31 +28,31 @@ def obtener_versiones():
         'Explorer': {'XLT': 1.00, 'Limited': 1.15, 'ST': 1.30},
         'Fiesta': {'Power/Max': 0.85, 'Move': 0.95, 'Titanium': 1.05},
         'Getz': {'1.3 GL': 0.90, '1.6 GLS': 1.00},
-        'Tucson': {'GL': 0.90, 'GLS': 1.00, 'Limited': 1.15}
+        'Spark': {'LS': 1.00, 'LT': 1.10},
+        'Tahoe': {'LS': 0.90, 'LT': 1.00, 'Z71': 1.20}
     }
 
 def calcular_valor_final(marca, modelo, version, anio, km, duenos, choque, e, m):
     df = cargar_inventario_excel()
-    if df is None:
-        return 0
+    if df is None: return 0
     
-    # Buscamos la fila exacta en su Excel
+    # Buscamos usando su columna 'precio_tope'
     filtro = df[(df['marca'] == marca) & (df['modelo'] == modelo) & (df['anio'] == anio)]
     
     if not filtro.empty:
-        valor = float(filtro['precio_base'].values[0])
+        valor = float(filtro['precio_tope'].values[0])
     else:
         return 0
 
-    # Aplicamos el potenciador de la versión
+    # Potenciadores de versión
     data_v = obtener_versiones()
     multiplicador = data_v.get(modelo, {}).get(version, 1.0)
     valor *= multiplicador
     
-    # Descuentos por estado físico
-    if km > 150000: valor *= 0.95
-    if choque == "Sí": valor *= 0.75
-    if e: valor *= 0.94 # Pintura
-    if m: valor *= 0.88 # Mecánica
+    # Descuentos suaves (Realismo de Lord Flores)
+    if km > 150000: valor *= 0.97
+    if choque == "Sí": valor *= 0.80
+    if e: valor *= 0.96 # Pintura
+    if m: valor *= 0.92 # Mecánica
     
     return round(valor, 2)
