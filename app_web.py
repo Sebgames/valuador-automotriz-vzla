@@ -21,7 +21,6 @@ st.markdown(f"""
           gtag('js', new Date());
           gtag('config', '{ga_id}');
         </script>
-
         <meta name="google-site-verification" content="MqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I" />
     </head>
     """, unsafe_allow_html=True)
@@ -253,5 +252,6 @@ else:
 
 
 st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva ")
+
 
 
