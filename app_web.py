@@ -2,11 +2,29 @@ import streamlit as st
 
 import motor_logico as ml
 
-
+try:
+    ga_id = st.secrets["google_analytics"]["measurement_id"]
+except:
+    ga_id = "G-KD5HF5YXPB" # Respaldo por si acaso
 
 st.set_page_config(page_title="Valuecar PRO 🇻🇪", page_icon="https://github.com/Sebgames/valuador-automotriz-vzla/blob/main/vecteezy_compact-car_1193767.png?raw=true", 
 
 layout="centered")
+
+
+st.markdown(f"""
+    <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id={ga_id}"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){{dataLayer.push(arguments);}}
+          gtag('js', new Date());
+          gtag('config', '{ga_id}');
+        </script>
+
+        <meta name="google-site-verification" content="MqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I" />
+    </head>
+    """, unsafe_allow_html=True)
 
 
 
@@ -17,7 +35,6 @@ st.markdown("#### Portal creado y diseñado para encontrar el precio correcto de
 
 
 st.markdown(f"""
-
     <head>
         <meta name="google-site-verification" content="MqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I" />
         <meta name="apple-mobile-web-app-capable" content="yes">
@@ -236,4 +253,5 @@ else:
 
 
 st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva ")
+
 
