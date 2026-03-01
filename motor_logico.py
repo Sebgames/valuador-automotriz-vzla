@@ -1,15 +1,19 @@
 import pandas as pd
 
 def cargar_inventario_excel():
+    """Lee la base de datos de precios desde el archivo CSV"""
     try:
+        # Intenta leer el archivo que usted subirá a GitHub
         df = pd.read_csv('precios.csv')
+        # Limpia espacios por si acaso
         df.columns = df.columns.str.strip()
         return df
-    except:
+    except Exception as e:
+        # Si el archivo no existe o está mal formado, devuelve None
         return None
 
 def obtener_versiones():
-    # Esta es la Super Data de versiones por modelo
+    """Super Data de versiones y sus potenciadores de precio"""
     return {
         'Corolla': {'XLI': 0.90, 'GLI': 1.00, 'SEG': 1.15},
         'Yaris': {'Versión E': 0.85, 'Versión G': 1.00, 'Sport': 1.10},
@@ -26,9 +30,10 @@ def obtener_versiones():
 
 def calcular_valor_final(marca, modelo, version, anio, km, duenos, choque, e, m):
     df = cargar_inventario_excel()
-    if df is None: return 0
+    if df is None:
+        return 0
     
-    # Filtro por Marca, Modelo y Año en su Excel
+    # Buscamos la fila exacta en su Excel
     filtro = df[(df['marca'] == marca) & (df['modelo'] == modelo) & (df['anio'] == anio)]
     
     if not filtro.empty:
@@ -36,15 +41,15 @@ def calcular_valor_final(marca, modelo, version, anio, km, duenos, choque, e, m)
     else:
         return 0
 
-    # Aplicar Potenciador de Versión
+    # Aplicamos el potenciador de la versión
     data_v = obtener_versiones()
     multiplicador = data_v.get(modelo, {}).get(version, 1.0)
     valor *= multiplicador
     
-    # Castigos por detalles (Ajustados para no regalar el carro)
-    if km > 150000: valor *= 0.96
+    # Descuentos por estado físico
+    if km > 150000: valor *= 0.95
     if choque == "Sí": valor *= 0.75
-    if e: valor *= 0.95 # Pintura
-    if m: valor *= 0.90 # Mecánica
+    if e: valor *= 0.94 # Pintura
+    if m: valor *= 0.88 # Mecánica
     
     return round(valor, 2)
