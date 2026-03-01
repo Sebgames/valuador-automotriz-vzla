@@ -3,8 +3,8 @@ import motor_logico as ml
 
 st.set_page_config(page_title="Valuador Lord Flores", layout="centered", page_icon="💎")
 
-st.title("💎 Valuador Automotriz Pro")
-st.markdown("### *Sistema de Inteligencia de Mercado - Lord Flores*")
+st.title("💎 Valuecar Pro")
+st.markdown("### *Calcula el precio de automoviles con confianza con Valuecar Pro ")
 
 df = ml.cargar_inventario_excel()
 data_v = ml.obtener_versiones()
@@ -63,4 +63,5 @@ else:
     st.error("⚠️ Su Nobleza, el archivo 'precios.csv' no responde.")
     st.info("Verifique que el archivo en GitHub no tenga punto y coma (;) y use comas (,).")
 
-st.sidebar.caption("💎 Powered by Lord Flores Research")
+st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva ")
+
