@@ -1,6 +1,15 @@
 import streamlit as st
 import motor_logico as ml
 
+st.markdown(f"""
+    <head>
+        <meta name="google-site-verification" content="<meta name="google-site-verification" content="MqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I" />" />
+        
+        <title>Lord Valuador | Precios de Carros Usados en Venezuela</title>
+        <meta name="description" content="Consulte el precio real de carros usados en Venezuela. Investigación de mercado de Lord Flores en Puerto Cabello y Carabobo.">
+    </head>
+""", unsafe_allow_html=True)
+
 st.set_page_config(page_title="Valuecar PRO 🇻🇪", page_icon="https://github.com/Sebgames/valuador-automotriz-vzla/blob/main/vecteezy_compact-car_1193767.png?raw=true", 
 layout="centered")
 
@@ -119,6 +128,7 @@ else:
     st.info("Verifique que el archivo en GitHub no tenga punto y coma (;) y use comas (,).")
 
 st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva ")
+
 
 
 
