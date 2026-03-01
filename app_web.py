@@ -131,3 +131,4 @@ st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva "
 
 
 
+
