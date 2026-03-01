@@ -6,6 +6,26 @@ st.set_page_config(page_title="Valuecar PRO 🇻🇪", layout="centered", page_i
 st.title("💎 Valuecar Pro")
 st.markdown("#### Portal creado y diseñado para encontrar el precio correcto de tu automovil usado en el mercado venezolano 🇻🇪 ")
 
+st.markdown(f"""
+    <head>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="apple-mobile-web-app-title" content="Lord Valuador">
+        <link rel="apple-touch-icon" href="https://github.com/Sebgames/valuador-automotriz-vzla/blob/main/vecteezy_compact-car_1193767.png?raw=true">
+    </head>
+    <style>
+        /* Ocultar el menú de Streamlit para que parezca App nativa */
+        #MainMenu {{visibility: hidden;}}
+        footer {{visibility: hidden;}}
+        header {{visibility: hidden;}}
+        
+        /* Color de fondo Premium */
+        .stApp {{
+            background-color: #0e1117;
+        }}
+    </style>
+    """, unsafe_allow_html=True)
+
 st.markdown("""
     <style>
     /* Banner Tricolor en la parte superior */
@@ -103,6 +123,7 @@ else:
     st.info("Verifique que el archivo en GitHub no tenga punto y coma (;) y use comas (,).")
 
 st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva ")
+
 
 
 
