@@ -6,8 +6,7 @@
     
     <meta name="google-site-verification" content="MqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I" />
     
-    <title>Valuecar PRO | Precios de Carros Usados Venezuela 🇻🇪</title>
-    <meta name="description" content="Calculadora oficial de precios de carros usados en Venezuela. Consulta el valor real de tu vehículo con el sistema de Lord Flores.">
+    <title>Valuecar PRO | El Estándar de Precios en Venezuela 🇻🇪</title>
     
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -16,28 +15,132 @@
     })(window,document,'script','dataLayer','GTM-MB5STRND');</script>
 
     <style>
-        body { font-family: 'Arial', sans-serif; background-color: #121212; color: white; text-align: center; margin: 0; padding: 0; }
-        .banner { height: 10px; background: linear-gradient(to right, #f1c40f 33%, #2980b9 33% 66%, #c0392b 66%); }
-        .container { padding: 100px 20px; }
-        h1 { color: #f1c40f; font-size: 3rem; margin-bottom: 10px; }
-        p { font-size: 1.2rem; color: #ccc; }
-        .btn { 
-            display: inline-block; padding: 15px 40px; margin-top: 30px; 
-            background-color: #f1c40f; color: black; font-weight: bold; 
-            text-decoration: none; border-radius: 50px; font-size: 1.5rem;
-            transition: transform 0.3s;
+        :root {
+            --gold: #f1c40f;
+            --blue: #2980b9;
+            --red: #c0392b;
         }
-        .btn:hover { transform: scale(1.1); background-color: #fff; }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #000;
+            color: white;
+            overflow: hidden;
+        }
+
+        /* Fondo Animado de Carros */
+        .hero-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4; /* Oscurecemos para que resalte el texto */
+            z-index: -1;
+            filter: grayscale(30%) brightness(50%);
+        }
+
+        /* Capa de diseño tricolor superior */
+        .top-bar {
+            height: 5px;
+            width: 100%;
+            background: linear-gradient(to right, var(--gold) 33.33%, var(--blue) 33.33% 66.66%, var(--red) 66.66%);
+            position: fixed;
+            top: 0;
+            z-index: 100;
+        }
+
+        .overlay {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+        }
+
+        .content-box {
+            text-align: center;
+            animation: fadeInScale 1.2s ease-out;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(241, 196, 15, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: #ddd;
+            max-width: 600px;
+        }
+
+        /* Botón Dinámico */
+        .main-btn {
+            position: relative;
+            padding: 18px 45px;
+            background: transparent;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border: 2px solid var(--gold);
+            border-radius: 5px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.2);
+        }
+
+        .main-btn:hover {
+            background: var(--gold);
+            color: black;
+            box-shadow: 0 0 40px rgba(241, 196, 15, 0.6);
+            transform: translateY(-5px);
+        }
+
+        /* Animaciones */
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Partículas o Efectos de Brillo (Opcional) */
+        .badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
     </style>
 </head>
 <body>
-    <div class="banner"></div>
-    <div class="container">
-        <h1>💎 Valuecar PRO</h1>
-        <p>El estándar de precios para el mercado automotriz venezolano.</p>
-        <p>Potenciado por la inteligencia de mercado de <strong>Lord Flores</strong>.</p>
-        
-        <a href="https://valuecar-pro-vzla.streamlit.app" class="btn">ACCEDER AL VALUADOR</a>
+    <div class="top-bar"></div>
+
+    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" class="hero-video" alt="Luxury Car Background">
+
+    <div class="overlay">
+        <div class="content-box">
+            <div class="badge">VENEZUELA AUTOMOTRIZ 🇻🇪</div>
+            <h1>Valuecar PRO</h1>
+            <p class="subtitle">La plataforma definitiva para conocer el valor real de vehículos en el mercado nacional.</p>
+            
+            <a href="https://valuador-automotriz-vzla.streamlit.app" class="main-btn">Iniciar Valuador</a>
+        </div>
     </div>
 
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MB5STRND"
