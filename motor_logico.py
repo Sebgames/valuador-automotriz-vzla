@@ -2,23 +2,22 @@ import pandas as pd
 
 def cargar_inventario_excel():
     try:
-        # 1. Leemos con separador de punto y coma (;) como está su archivo
-        df = pd.read_csv('precios.csv', sep=';')
+        # Cargamos el CSV (ya configurado con comas)
+        df = pd.read_csv('precios.csv')
         
-        # 2. Limpiamos nombres de columnas por si hay espacios
+        # Limpieza de nombres de columnas
         df.columns = df.columns.str.strip()
         
-        # 3. Limpiamos los precios: Convertimos "24.900" en 24900.0
-        # Primero aseguramos que sea texto, quitamos el punto de mil y pasamos a número
+        # EL ESCUDO: Por si quedó algún punto como "24.900", lo quitamos
+        # Si el número ya viene limpio como "24900", no hace nada malo
         df['precio_tope'] = df['precio_tope'].astype(str).str.replace('.', '', regex=False).astype(float)
         
         return df
     except Exception as e:
-        # Si sale este error, es que el archivo no está en la raíz de GitHub
         return None
 
 def obtener_versiones():
-    """Potenciadores de precio según el modelo"""
+    """Mega Data de versiones para que el usuario elija"""
     return {
         'Corolla': {'XLI': 0.90, 'GLI': 1.00, 'SEG': 1.15},
         'Yaris': {'Versión E': 0.85, 'Versión G': 1.00, 'Sport': 1.10},
@@ -38,7 +37,7 @@ def calcular_valor_final(marca, modelo, version, anio, km, duenos, choque, e, m)
     df = cargar_inventario_excel()
     if df is None: return 0
     
-    # Buscamos la fila exacta
+    # Buscamos en su investigación de mercado
     filtro = df[(df['marca'] == marca) & (df['modelo'] == modelo) & (df['anio'] == anio)]
     
     if not filtro.empty:
@@ -46,12 +45,12 @@ def calcular_valor_final(marca, modelo, version, anio, km, duenos, choque, e, m)
     else:
         return 0
 
-    # Aplicamos versión
+    # Potenciador de versión automático
     data_v = obtener_versiones()
     multiplicador = data_v.get(modelo, {}).get(version, 1.0)
     valor *= multiplicador
     
-    # Castigos por estado (Ajuste suave estilo Lord Flores)
+    # Castigos de estado (Estilo Lord Flores: Justos pero realistas)
     if km > 150000: valor *= 0.97
     if choque == "Sí": valor *= 0.80
     if e: valor *= 0.96 # Pintura
