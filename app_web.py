@@ -1,53 +1,66 @@
 import streamlit as st
 import motor_logico as ml
 
-st.set_page_config(page_title="Valuador Lord Flores", layout="centered")
+st.set_page_config(page_title="Valuador Lord Flores", layout="centered", page_icon="💎")
 
 st.title("💎 Valuador Automotriz Pro")
-st.caption("Investigación de Mercado by Lord Flores")
+st.markdown("### *Sistema de Inteligencia de Mercado - Lord Flores*")
 
-# Cargamos la data desde el Excel
 df = ml.cargar_inventario_excel()
-data_versiones = ml.obtener_versiones()
+data_v = ml.obtener_versiones()
 
 if df is not None:
-    tab1, tab2 = st.tabs(["📊 Calculadora", "🕵️ Scanner de Ofertas"])
+    t1, t2 = st.tabs(["📊 Valuador", "🔍 Scanner de Negocios"])
 
-    with tab1:
-        c1, c2 = st.columns(2)
-        with c1:
+    with t1:
+        st.subheader("Configuración del Vehículo")
+        col1, col2 = st.columns(2)
+        with col1:
             marca = st.selectbox("Marca", sorted(df['marca'].unique()))
             modelo = st.selectbox("Modelo", sorted(df[df['marca'] == marca]['modelo'].unique()))
             anio = st.selectbox("Año", sorted(df[(df['marca'] == marca) & (df['modelo'] == modelo)]['anio'].unique(), reverse=True))
-        with c2:
-            # Selecciona versiones basadas en el modelo
-            versiones_f = list(data_versiones.get(modelo, {'Base': 1.0}).keys())
-            version = st.selectbox("Versión", versiones_f)
+        with col2:
+            ver_list = list(data_v.get(modelo, {'Base': 1.0}).keys())
+            version = st.selectbox("Versión", ver_list)
             km = st.number_input("Kilometraje", 0, 1000000, 100000)
 
-        ch = st.checkbox("¿Tuvo choques?")
-        
-        if st.button("CALCULAR SEGÚN MI DATA", use_container_width=True):
-            res = ml.calcular_valor_final(marca, modelo, version, anio, km, 1, "Sí" if ch else "No", False, False)
-            if res > 0:
-                st.success(f"## Valor Estimado: ${res:,.2f} USD")
-            else:
-                st.error("No encontré ese año en la base de datos.")
+        with st.expander("🛠️ Detalles Técnicos y Estéticos"):
+            ch = st.checkbox("¿Tiene historial de siniestros/choques?")
+            pi = st.checkbox("¿Presenta detalles de pintura?")
+            me = st.checkbox("¿Presenta fallas mecánicas?")
 
-    with tab2:
-        st.subheader("Análisis de Negocio")
-        p_oferta = st.number_input("Precio que te piden ($)", 0.0)
+        if st.button("CALCULAR PRECIO MAESTRO", use_container_width=True):
+            res = ml.calcular_valor_final(marca, modelo, version, anio, km, 1, "Sí" if ch else "No", pi, me)
+            if res > 0:
+                st.balloons()
+                st.success(f"## Valor sugerido: ${res:,.2f} USD")
+            else:
+                st.error("No se encontró ese año en el archivo CSV.")
+
+    with t2:
+        st.subheader("🕵️ Análisis de Oportunidad")
+        p_oferta = st.number_input("Precio de la oferta actual ($)", 0.0)
         
-        if st.button("¿VALE LA PENA?", use_container_width=True):
-            v_real = ml.calcular_valor_final(marca, modelo, version, anio, km, 1, "Sí" if ch else "No", False, False)
+        if st.button("ESCANEAR OFERTA", use_container_width=True):
+            v_real = ml.calcular_valor_final(marca, modelo, version, anio, km, 1, "Sí" if ch else "No", pi, me)
             if v_real > 0:
                 diff = ((p_oferta - v_real) / v_real) * 100
-                if diff < -10: st.balloons(); st.success("💎 ¡OFERTA IMPERDIBLE!")
-                elif diff <= 8: st.info("✅ PRECIO JUSTO")
-                else: st.error("🚨 SOBREPRECIO")
+                st.divider()
+                st.write(f"Valor de mercado según Lord Flores: **${v_real:,.0f}**")
+                
+                if diff < -10:
+                    st.success(f"### 🔥 ¡OFERTA DETECTADA! (Ahorras {abs(diff):.1f}%)")
+                    st.info("Este precio es significativamente bajo. Si el carro está sano, ¡es un negocio de oro!")
+                elif diff <= 8:
+                    st.info(f"### ✅ NEGOCIO JUSTO ({diff:.1f}%)")
+                    st.write("El precio está en el rango correcto del mercado.")
+                else:
+                    st.error(f"### 🚨 SOBREPRECIO ({diff:.1f}%)")
+                    st.write("El vendedor está pidiendo más de lo que dicta su base de datos.")
             else:
-                st.warning("Verifica los datos arriba.")
+                st.warning("Primero defina el vehículo en la pestaña anterior.")
 else:
-    # Este mensaje sale si el archivo precios.csv no está en la misma carpeta que app_web.py
-    st.error("⚠️ Su Nobleza, el archivo 'precios.csv' no se encuentra o tiene un error de formato.")
-    st.info("Asegúrese de que el archivo esté en GitHub con el nombre exacto 'precios.csv' (todo en minúsculas).")
+    st.error("⚠️ Su Nobleza, el archivo 'precios.csv' no responde.")
+    st.info("Verifique que el archivo en GitHub no tenga punto y coma (;) y use comas (,).")
+
+st.sidebar.caption("💎 Powered by Lord Flores Research")
