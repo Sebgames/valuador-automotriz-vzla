@@ -4,7 +4,46 @@ import motor_logico as ml
 st.set_page_config(page_title="Valuecar PRO 🇻🇪", layout="centered", page_icon="💎")
 
 st.title("💎 Valuecar Pro")
-st.markdown("#### Portal creado y diseñado para ecnontrar el precio correcto de tu automovil usado en el mercado venezolano 🇻🇪 ")
+st.markdown("#### Portal creado y diseñado para encontrar el precio correcto de tu automovil usado en el mercado venezolano 🇻🇪 ")
+
+st.markdown("""
+    <style>
+    /* Banner Tricolor en la parte superior */
+    .stApp {
+        border-top: 8px solid #f1c40f; /* Amarillo */
+    }
+    .stApp::before {
+        content: "";
+        position: fixed;
+        top: 8px;
+        left: 0;
+        width: 100%;
+        height: 8px;
+        background-color: #2980b9; /* Azul */
+        z-index: 999;
+    }
+    .stApp::after {
+        content: "";
+        position: fixed;
+        top: 16px;
+        left: 0;
+        width: 100%;
+        height: 8px;
+        background-color: #c0392b; /* Rojo */
+        z-index: 999;
+    }
+    
+    /* Estilo para el título */
+    .titulo-vzla {
+        text-align: center;
+        color: #f1c40f;
+        background-color: #1e272e;
+        padding: 15px;
+        border-radius: 10px;
+        border-bottom: 4px solid #2980b9;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 df = ml.cargar_inventario_excel()
 data_v = ml.obtener_versiones()
@@ -64,6 +103,7 @@ else:
     st.info("Verifique que el archivo en GitHub no tenga punto y coma (;) y use comas (,).")
 
 st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva ")
+
 
 
 
