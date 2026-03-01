@@ -19,15 +19,10 @@ st.markdown("#### Portal creado y diseñado para encontrar el precio correcto de
 st.markdown(f"""
 
     <head>
-
         <meta name="google-site-verification" content="MqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I" />
-
         <meta name="apple-mobile-web-app-capable" content="yes">
-
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
         <meta name="apple-mobile-web-app-title" content="Lord Valuador">
-
         <link rel="apple-touch-icon" href="https://github.com/Sebgames/valuador-automotriz-vzla/blob/main/vecteezy_compact-car_1193767.png?raw=true">
 
     </head>
@@ -241,3 +236,4 @@ else:
 
 
 st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva ")
+
