@@ -28,12 +28,6 @@ st.markdown(f"""
         <meta name="apple-mobile-web-app-title" content="Lord Valuador">
         <link rel="apple-touch-icon" href="https://github.com/Sebgames/valuador-automotriz-vzla/blob/main/vecteezy_compact-car_1193767.png?raw=true">
     </head>
-    <style>
-        #MainMenu {{visibility: hidden;}}
-        footer {{visibility: hidden;}}
-        header {{visibility: hidden;}}
-        
-    </style>
     """, unsafe_allow_html=True)
 
 st.markdown("""
@@ -133,6 +127,7 @@ else:
     st.info("Verifique que el archivo en GitHub no tenga punto y coma (;) y use comas (,).")
 
 st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva ")
+
 
 
 
