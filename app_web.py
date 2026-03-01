@@ -11,14 +11,38 @@ st.set_page_config(
 # 2. LA INYECCIÓN DIRECTA (Pruebe ponerla justo aquí)
 st.write(f'<p style="display:none;">google-site-verification: googleMqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I.html</p>', unsafe_allow_html=True)
 
-st.markdown(f"""
-    <head>
-        <meta name="google-site-verification" content="MqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I" />
-    </head>
-    """, unsafe_allow_html=True)
+import streamlit as st
+import motor_logico as ml
 
-st.title("💎 Valuecar Pro")
-st.markdown("#### Portal creado y diseñado para encontrar el precio correcto de tu automovil usado en el mercado venezolano 🇻🇪 ")
+# 1. CONFIGURACIÓN INICIAL
+st.set_page_config(
+    page_title="Valuecar PRO 🇻🇪", 
+    page_icon="💎", 
+    layout="centered"
+)
+
+# 2. INYECCIÓN MAESTRA (Analytics + Search Console)
+# Usamos un solo bloque de JavaScript para forzar a Google a leer todo
+st.markdown("""
+    <script>
+        // Inyectar Google Tag (gtag.js)
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-KD5HF5YXPB';
+        document.head.appendChild(script);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KD5HF5YXPB');
+
+        // Inyectar Verificación de Search Console
+        var meta = document.createElement('meta');
+        meta.name = 'google-site-verification';
+        meta.content = 'MqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I';
+        document.head.appendChild(meta);
+    </script>
+""", unsafe_allow_html=True)
 
 st.markdown(f"""
     <head>
@@ -127,6 +151,7 @@ else:
     st.info("Verifique que el archivo en GitHub no tenga punto y coma (;) y use comas (,).")
 
 st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva ")
+
 
 
 
