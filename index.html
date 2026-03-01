@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <meta name="google-site-verification" content="MqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I" />
-    
     <title>Valuecar PRO | El Estándar de Precios en Venezuela 🇻🇪</title>
     
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -17,210 +15,190 @@
     <style>
         :root {
             --gold: #f1c40f;
-            --blue: #2980b9;
-            --red: #c0392b;
+            --gold-glow: rgba(241, 196, 15, 0.4);
             --white: #ffffff;
-            --dark: #121212;
+            --dark: #080808;
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             background-color: var(--dark);
             color: var(--white);
-            overflow: hidden; /* Mantenemos el scroll limpio */
+            overflow: hidden;
         }
 
-        /* Capa de diseño tricolor superior */
+        /* DISEÑO TRICOLOR SUPERIOR */
         .top-bar {
-            height: 6px;
-            width: 100%;
-            background: linear-gradient(to right, var(--gold) 33.33%, var(--blue) 33.33% 66.66%, var(--red) 66.66%);
-            position: fixed;
-            top: 0;
-            z-index: 1000;
+            height: 4px; width: 100%;
+            background: linear-gradient(to right, #f1c40f 33.3%, #2980b9 33.3% 66.6%, #c0392b 66.6%);
+            position: fixed; top: 0; z-index: 1000;
         }
 
-        /* Fondo de Carros - Alta Visibilidad */
+        /* FONDO DE ALTA VISIBILIDAD */
         .hero-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 1; /* Imagen totalmente visible */
-            z-index: -10;
-            filter: grayscale(10%) brightness(80%); /* Un toque de contraste */
-            transition: transform 0.1s ease-out; /* Para el efecto Parallax */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: -10;
+            filter: brightness(0.85) contrast(1.1);
+            transition: transform 0.1s ease-out;
+            transform: scale(1.05);
         }
 
-        /* Capa de contraste para asegurar legibilidad */
-        .gradient-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%);
             z-index: -5;
         }
 
         .main-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            padding: 20px;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; padding: 20px;
         }
 
-        .content-box {
-            text-align: center;
-            padding: 40px;
-            border-radius: 15px;
-            max-width: 800px;
-        }
+        .content-box { text-align: center; max-width: 900px; z-index: 10; }
 
-        /* Animaciones en Cascada (CSS) */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        @keyframes glowPulse { 0% { box-shadow: 0 0 15px rgba(241, 196, 15, 0.2); } 50% { box-shadow: 0 0 30px rgba(241, 196, 15, 0.6); } 100% { box-shadow: 0 0 15px rgba(241, 196, 15, 0.2); } }
-
-        .anim-1 { animation: scaleUp 1s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
-        .anim-2 { animation: slideUp 1s ease-out forwards; animation-delay: 0.6s; opacity: 0; }
-        .anim-3 { animation: slideUp 1s ease-out forwards; animation-delay: 1.0s; opacity: 0; }
-        .anim-4 { animation: fadeIn 1s ease-out forwards; animation-delay: 1.4s; opacity: 0; }
-        .anim-5 { animation: scaleUp 1s ease-out forwards, glowPulse 3s infinite; animation-delay: 1.8s; opacity: 0; }
-
-        .badge-premium {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--white);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 1rem;
-            text-transform: uppercase;
-            border: 1px solid rgba(255,255,255,0.2);
-            display: inline-flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .badge-premium .gold-diamond { color: var(--gold); margin-right: 10px; font-size: 1.2rem; }
-
+        /* TÍTULO CON BRILLO PREMIUM SUTIL */
         h1 {
-            font-size: 4.5rem;
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 8px;
-            color: var(--gold);
-            text-shadow: 0 0 30px rgba(241, 196, 15, 0.7);
-            font-weight: 800;
+            font-size: 5.5rem; margin: 0; text-transform: uppercase;
+            letter-spacing: 15px; font-weight: 900;
+            background: linear-gradient(90deg, #fff, #f1c40f, #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 5s linear infinite;
+            filter: drop-shadow(0 0 15px rgba(241, 196, 15, 0.3));
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
 
         .subtitle {
-            font-size: 1.6rem;
-            font-weight: 300;
-            margin-top: 20px;
-            margin-bottom: 50px;
-            color: #eee;
-            line-height: 1.6;
+            font-size: 1.4rem; font-weight: 300; margin: 20px 0 50px;
+            color: #ddd; letter-spacing: 2px;
         }
 
-        /* Botón de Entrada Dinámico */
+        /* BOTÓN DE ALTA INGENIERÍA */
+        .btn-wrapper { position: relative; display: inline-block; }
+
         .main-btn {
             position: relative;
-            padding: 20px 60px;
-            background: transparent;
+            padding: 24px 75px;
+            font-size: 1.3rem; font-weight: 800;
             color: var(--white);
             text-decoration: none;
-            font-size: 1.5rem;
-            font-weight: bold;
-            border: 2px solid var(--gold);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            box-shadow: 0 0 15px rgba(241, 196, 15, 0.2);
+            letter-spacing: 5px;
+            border: 1px solid rgba(241, 196, 15, 0.5);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            display: inline-block;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+            /* Animación Idle de Pulso */
+            animation: idlePulse 2.5s infinite ease-in-out;
+            cursor: pointer;
         }
 
-        .main-btn::before {
-            content: '';
+        @keyframes idlePulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(241, 196, 15, 0.1); border-color: rgba(241, 196, 15, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(241, 196, 15, 0.4); border-color: var(--gold); }
+        }
+
+        /* Efecto Linterna (Mouse Tracker) */
+        .btn-glow {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background-color: var(--gold);
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            border-radius: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            z-index: -1;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at var(--x) var(--y), var(--gold-glow) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
         }
 
         .main-btn:hover {
+            transform: scale(1.05) translateY(-5px);
+            color: var(--gold);
+            border-color: var(--white);
+        }
+
+        .main-btn:hover .btn-glow { opacity: 1; }
+
+        /* Efecto de Clic Explosivo */
+        .main-btn:active {
+            transform: scale(0.95);
+            background: var(--gold);
             color: var(--dark);
-            transform: scale(1.05);
-            box-shadow: 0 0 50px rgba(241, 196, 15, 0.8);
+            transition: 0.1s;
         }
 
-        .main-btn:hover::before {
-            transform: translate(-50%, -50%) scale(1);
+        .badge {
+            color: var(--gold); border: 1px solid var(--gold);
+            padding: 5px 20px; font-size: 0.8rem; letter-spacing: 6px;
+            margin-bottom: 25px; display: inline-block; font-weight: bold;
         }
 
-        /* Soporte para móviles */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; letter-spacing: 4px; }
-            .subtitle { font-size: 1.2rem; margin-bottom: 30px; }
-            .main-btn { font-size: 1.2rem; padding: 15px 40px; }
+            h1 { font-size: 2.8rem; letter-spacing: 6px; }
+            .subtitle { font-size: 1rem; }
+            .main-btn { padding: 18px 40px; font-size: 1rem; }
         }
     </style>
 </head>
 <body>
     <div class="top-bar"></div>
 
-    <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" class="hero-background" id="parallaxBg" alt="Luxury Sports Car Background">
-    <div class="gradient-overlay"></div>
+    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1920&q=80" 
+         class="hero-background" id="parallaxBg" alt="Porsche Luxury">
+    <div class="overlay"></div>
 
     <div class="main-container">
         <div class="content-box">
-            <div class="badge-premium anim-1">
-                <span class="gold-diamond"></span> VENEZUELA AUTOMOTRIZ 🇻🇪
-            </div>
-            
-            <h1 class="anim-2">Valuecar PRO</h1>
-            
-            <p class="subtitle anim-3">
-                Acceda a la inteligencia de mercado más precisa para conocer el valor real de su vehículo en el mercado nacional.
-            </p>
-            
-            <p class="subtitle anim-4" style="font-size: 1rem; color: #ccc;">
-                Especificamente diseñado para el publico venezolano.
+            <div class="badge">Calcula el precio de tu vehiculo usado a el precio justo de el mercado GRATIS </div>
+            <h1 id="title">Value-car PRO</h1>
+            <p class="subtitle">
+                Acceda al estándar de inteligencia automotriz.<br>
+                <strong>Diseñado especificamente para el mercado automovilistico venezolano</strong>
             </p>
 
-            <a href="https://valuecar-pro-vzla.streamlit.app" class="main-btn anim-5">Iniciar Valuador <span style="margin-left: 10px;">➔</span></a>
+            <div class="btn-wrapper">
+                <a href="https://valuecar-pro-vzla.streamlit.app" class="main-btn" id="ctaBtn">
+                    <div class="btn-glow" id="glowLayer"></div>
+                    Iniciar Valuador ➔
+                </a>
+            </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener("mousemove", parallaxEffect);
         const bg = document.getElementById("parallaxBg");
+        const btn = document.getElementById("ctaBtn");
+        const glow = document.getElementById("glowLayer");
 
-        function parallaxEffect(e) {
-            let width = window.innerWidth;
-            let height = window.innerHeight;
-            let mouseX = e.clientX;
-            let mouseY = e.clientY;
+        // Parallax del fondo suave
+        document.addEventListener("mousemove", (e) => {
+            let x = (e.clientX - window.innerWidth / 2) * 0.01;
+            let y = (e.clientY - window.innerHeight / 2) * 0.01;
+            bg.style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+        });
 
-            // Ajustamos la intensidad del movimiento (0.01 = 1% de movimiento)
-            let moveX = (mouseX - width / 2) * 0.01;
-            let moveY = (mouseY - height / 2) * 0.01;
+        // Rastreador de mouse para el botón (Efecto Linterna)
+        btn.addEventListener("mousemove", (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            glow.style.setProperty('--x', `${x}px`);
+            glow.style.setProperty('--y', `${y}px`);
+        });
 
-            bg.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.1)`; // Escala 1.1 para no ver bordes
-        }
+        // Animación de Clic Premium
+        btn.addEventListener("click", function(e) {
+            const self = this;
+            setTimeout(() => {
+                window.location.href = self.href;
+            }, 150);
+            e.preventDefault();
+        });
     </script>
 
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MB5STRND"
