@@ -19,6 +19,8 @@
             --gold: #f1c40f;
             --blue: #2980b9;
             --red: #c0392b;
+            --white: #ffffff;
+            --dark: #121212;
         }
 
         body, html {
@@ -26,122 +28,200 @@
             padding: 0;
             height: 100%;
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #000;
-            color: white;
-            overflow: hidden;
+            background-color: var(--dark);
+            color: var(--white);
+            overflow: hidden; /* Mantenemos el scroll limpio */
         }
 
-        /* Fondo Animado de Carros */
-        .hero-video {
+        /* Capa de diseño tricolor superior */
+        .top-bar {
+            height: 6px;
+            width: 100%;
+            background: linear-gradient(to right, var(--gold) 33.33%, var(--blue) 33.33% 66.66%, var(--red) 66.66%);
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Fondo de Carros - Alta Visibilidad */
+        .hero-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.4; /* Oscurecemos para que resalte el texto */
-            z-index: -1;
-            filter: grayscale(30%) brightness(50%);
+            opacity: 1; /* Imagen totalmente visible */
+            z-index: -10;
+            filter: grayscale(10%) brightness(80%); /* Un toque de contraste */
+            transition: transform 0.1s ease-out; /* Para el efecto Parallax */
         }
 
-        /* Capa de diseño tricolor superior */
-        .top-bar {
-            height: 5px;
-            width: 100%;
-            background: linear-gradient(to right, var(--gold) 33.33%, var(--blue) 33.33% 66.66%, var(--red) 66.66%);
+        /* Capa de contraste para asegurar legibilidad */
+        .gradient-overlay {
             position: fixed;
             top: 0;
-            z-index: 100;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+            z-index: -5;
         }
 
-        .overlay {
+        .main-container {
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+            padding: 20px;
         }
 
         .content-box {
             text-align: center;
-            animation: fadeInScale 1.2s ease-out;
-            padding: 20px;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 800px;
         }
 
+        /* Animaciones en Cascada (CSS) */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes glowPulse { 0% { box-shadow: 0 0 15px rgba(241, 196, 15, 0.2); } 50% { box-shadow: 0 0 30px rgba(241, 196, 15, 0.6); } 100% { box-shadow: 0 0 15px rgba(241, 196, 15, 0.2); } }
+
+        .anim-1 { animation: scaleUp 1s ease-out forwards; animation-delay: 0.2s; opacity: 0; }
+        .anim-2 { animation: slideUp 1s ease-out forwards; animation-delay: 0.6s; opacity: 0; }
+        .anim-3 { animation: slideUp 1s ease-out forwards; animation-delay: 1.0s; opacity: 0; }
+        .anim-4 { animation: fadeIn 1s ease-out forwards; animation-delay: 1.4s; opacity: 0; }
+        .anim-5 { animation: scaleUp 1s ease-out forwards, glowPulse 3s infinite; animation-delay: 1.8s; opacity: 0; }
+
+        .badge-premium {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .badge-premium .gold-diamond { color: var(--gold); margin-right: 10px; font-size: 1.2rem; }
+
         h1 {
-            font-size: 4rem;
+            font-size: 4.5rem;
             margin: 0;
             text-transform: uppercase;
-            letter-spacing: 5px;
+            letter-spacing: 8px;
             color: var(--gold);
-            text-shadow: 0 0 20px rgba(241, 196, 15, 0.5);
+            text-shadow: 0 0 30px rgba(241, 196, 15, 0.7);
+            font-weight: 800;
         }
 
         .subtitle {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 300;
-            margin-bottom: 40px;
-            color: #ddd;
-            max-width: 600px;
+            margin-top: 20px;
+            margin-bottom: 50px;
+            color: #eee;
+            line-height: 1.6;
         }
 
-        /* Botón Dinámico */
+        /* Botón de Entrada Dinámico */
         .main-btn {
             position: relative;
-            padding: 18px 45px;
+            padding: 20px 60px;
             background: transparent;
-            color: var(--gold);
+            color: var(--white);
             text-decoration: none;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: bold;
             border: 2px solid var(--gold);
-            border-radius: 5px;
+            border-radius: 10px;
             overflow: hidden;
-            transition: all 0.4s ease;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             text-transform: uppercase;
+            letter-spacing: 2px;
             box-shadow: 0 0 15px rgba(241, 196, 15, 0.2);
         }
 
+        .main-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: var(--gold);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: -1;
+        }
+
         .main-btn:hover {
-            background: var(--gold);
-            color: black;
-            box-shadow: 0 0 40px rgba(241, 196, 15, 0.6);
-            transform: translateY(-5px);
+            color: var(--dark);
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(241, 196, 15, 0.8);
         }
 
-        /* Animaciones */
-        @keyframes fadeInScale {
-            0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
+        .main-btn:hover::before {
+            transform: translate(-50%, -50%) scale(1);
         }
 
-        /* Partículas o Efectos de Brillo (Opcional) */
-        .badge {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            display: inline-block;
-            border: 1px solid rgba(255,255,255,0.2);
+        /* Soporte para móviles */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; letter-spacing: 4px; }
+            .subtitle { font-size: 1.2rem; margin-bottom: 30px; }
+            .main-btn { font-size: 1.2rem; padding: 15px 40px; }
         }
     </style>
 </head>
 <body>
     <div class="top-bar"></div>
 
-    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" class="hero-video" alt="Luxury Car Background">
+    <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" class="hero-background" id="parallaxBg" alt="Luxury Sports Car Background">
+    <div class="gradient-overlay"></div>
 
-    <div class="overlay">
+    <div class="main-container">
         <div class="content-box">
-            <div class="badge">VENEZUELA AUTOMOTRIZ 🇻🇪</div>
-            <h1>Valuecar PRO</h1>
-            <p class="subtitle">La plataforma definitiva para conocer el valor real de vehículos en el mercado nacional.</p>
+            <div class="badge-premium anim-1">
+                <span class="gold-diamond"></span> VENEZUELA AUTOMOTRIZ 🇻🇪
+            </div>
             
-            <a href="https://valuecar-pro-vzla.streamlit.app" class="main-btn">Iniciar Valuador</a>
+            <h1 class="anim-2">Valuecar PRO</h1>
+            
+            <p class="subtitle anim-3">
+                Acceda a la inteligencia de mercado más precisa para conocer el valor real de su vehículo en el mercado nacional.
+            </p>
+            
+            <p class="subtitle anim-4" style="font-size: 1rem; color: #ccc;">
+                Especificamente diseñado para el publico venezolano.
+            </p>
+
+            <a href="https://valuador-automotriz-vzla.streamlit.app" class="main-btn anim-5">Iniciar Valuador <span style="margin-left: 10px;">➔</span></a>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("mousemove", parallaxEffect);
+        const bg = document.getElementById("parallaxBg");
+
+        function parallaxEffect(e) {
+            let width = window.innerWidth;
+            let height = window.innerHeight;
+            let mouseX = e.clientX;
+            let mouseY = e.clientY;
+
+            // Ajustamos la intensidad del movimiento (0.01 = 1% de movimiento)
+            let moveX = (mouseX - width / 2) * 0.01;
+            let moveY = (mouseY - height / 2) * 0.01;
+
+            bg.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.1)`; // Escala 1.1 para no ver bordes
+        }
+    </script>
 
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MB5STRND"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
