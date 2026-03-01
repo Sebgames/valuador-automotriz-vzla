@@ -122,9 +122,9 @@ Ford,F-150,2007,17900
 Ford,F-150,2007,14799
 Ford,F-150,2006,11990
 Ford,F-150,2005,9900
-Toyota,Yaris,2026,39500
-Toyota,Yaris,2025,36990
-Toyota,Yaris,2024,34700
+Toyota,Yaris,2026,36500
+Toyota,Yaris,2025,33000
+Toyota,Yaris,2024,31700
 Toyota,Yaris,2023,30000
 Toyota,Yaris,2022,28500
 Toyota,Yaris,2020,23000
@@ -209,3 +209,4 @@ JAC,Nevado,2026,35000
 JAC,Savanna,2026,46900
 JAC,Savanna,2025,40500
 JAC,J7,2025,29990
+
