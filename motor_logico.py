@@ -2,21 +2,23 @@ import pandas as pd
 
 def cargar_inventario_excel():
     try:
-        # Ajustado para leer punto y coma (;) que es como sale de su Excel
+        # 1. Leemos con separador de punto y coma (;) como está su archivo
         df = pd.read_csv('precios.csv', sep=';')
         
-        # Limpiamos los nombres de las columnas
+        # 2. Limpiamos nombres de columnas por si hay espacios
         df.columns = df.columns.str.strip()
         
-        # MAGIA: Convertimos sus precios (ej: 24.900) a números reales (24900)
-        # Quitamos el punto y lo convertimos a número
+        # 3. Limpiamos los precios: Convertimos "24.900" en 24900.0
+        # Primero aseguramos que sea texto, quitamos el punto de mil y pasamos a número
         df['precio_tope'] = df['precio_tope'].astype(str).str.replace('.', '', regex=False).astype(float)
         
         return df
     except Exception as e:
+        # Si sale este error, es que el archivo no está en la raíz de GitHub
         return None
 
 def obtener_versiones():
+    """Potenciadores de precio según el modelo"""
     return {
         'Corolla': {'XLI': 0.90, 'GLI': 1.00, 'SEG': 1.15},
         'Yaris': {'Versión E': 0.85, 'Versión G': 1.00, 'Sport': 1.10},
@@ -27,16 +29,16 @@ def obtener_versiones():
         'Silverado': {'LS': 0.90, 'LT': 1.00, 'LTZ': 1.20, 'High Country': 1.35},
         'Explorer': {'XLT': 1.00, 'Limited': 1.15, 'ST': 1.30},
         'Fiesta': {'Power/Max': 0.85, 'Move': 0.95, 'Titanium': 1.05},
-        'Getz': {'1.3 GL': 0.90, '1.6 GLS': 1.00},
         'Spark': {'LS': 1.00, 'LT': 1.10},
-        'Tahoe': {'LS': 0.90, 'LT': 1.00, 'Z71': 1.20}
+        'Tahoe': {'LS': 0.90, 'LT': 1.00, 'Z71': 1.20},
+        'Optra': {'Design': 1.00, 'Advance': 1.10, 'Limited': 1.15}
     }
 
 def calcular_valor_final(marca, modelo, version, anio, km, duenos, choque, e, m):
     df = cargar_inventario_excel()
     if df is None: return 0
     
-    # Buscamos usando su columna 'precio_tope'
+    # Buscamos la fila exacta
     filtro = df[(df['marca'] == marca) & (df['modelo'] == modelo) & (df['anio'] == anio)]
     
     if not filtro.empty:
@@ -44,12 +46,12 @@ def calcular_valor_final(marca, modelo, version, anio, km, duenos, choque, e, m)
     else:
         return 0
 
-    # Potenciadores de versión
+    # Aplicamos versión
     data_v = obtener_versiones()
     multiplicador = data_v.get(modelo, {}).get(version, 1.0)
     valor *= multiplicador
     
-    # Descuentos suaves (Realismo de Lord Flores)
+    # Castigos por estado (Ajuste suave estilo Lord Flores)
     if km > 150000: valor *= 0.97
     if choque == "Sí": valor *= 0.80
     if e: valor *= 0.96 # Pintura
