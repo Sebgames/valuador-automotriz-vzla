@@ -1,22 +1,21 @@
 import streamlit as st
 import motor_logico as ml
 
-st.set_page_config(page_title="Valuecar PRO 🇻🇪", page_icon="https://github.com/Sebgames/valuador-automotriz-vzla/blob/main/vecteezy_compact-car_1193767.png?raw=true", 
-layout="centered")
-import streamlit.components.v1 as components
-
-# Inyección de Verificación en el DOM
-components.html(
-    f"""
-    <script>
-        var meta = document.createElement('meta');
-        meta.name = "google-site-verification";
-        meta.content = "MqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I";
-        document.getElementsByTagName('head')[0].appendChild(meta);
-    </script>
-    """,
-    height=0,
+# 1. ESTO DEBE SER LO PRIMERO QUE LEA EL NAVEGADOR
+st.set_page_config(
+    page_title="Valuecar PRO 🇻🇪 | Precios de Carros Usados", 
+    page_icon="💎", 
+    layout="centered"
 )
+
+# 2. LA INYECCIÓN DIRECTA (Pruebe ponerla justo aquí)
+st.write(f'<p style="display:none;">google-site-verification: googleMqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I.html</p>', unsafe_allow_html=True)
+
+st.markdown(f"""
+    <head>
+        <meta name="google-site-verification" content="MqNrSrBhIxlVhEkoKxy-tWUTdruDgZbEUEtriVZNZ0I" />
+    </head>
+    """, unsafe_allow_html=True)
 
 st.title("💎 Valuecar Pro")
 st.markdown("#### Portal creado y diseñado para encontrar el precio correcto de tu automovil usado en el mercado venezolano 🇻🇪 ")
@@ -134,6 +133,7 @@ else:
     st.info("Verifique que el archivo en GitHub no tenga punto y coma (;) y use comas (,).")
 
 st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva ")
+
 
 
 
