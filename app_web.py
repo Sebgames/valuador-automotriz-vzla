@@ -4,7 +4,7 @@ import motor_logico as ml
 st.set_page_config(page_title="Valuecar PRO 🇻🇪", layout="centered", page_icon="💎")
 
 st.title("💎 Valuecar Pro")
-st.markdown("#### Portal creado y diseñado para ecnontrar el precio correcto de tu automovil usado en el mercado veenzolano 🇻🇪 ")
+st.markdown("#### Portal creado y diseñado para ecnontrar el precio correcto de tu automovil usado en el mercado venezolano 🇻🇪 ")
 
 df = ml.cargar_inventario_excel()
 data_v = ml.obtener_versiones()
@@ -64,6 +64,7 @@ else:
     st.info("Verifique que el archivo en GitHub no tenga punto y coma (;) y use comas (,).")
 
 st.sidebar.caption("💎 Potenciado por investigacion de el mercado exahustiva ")
+
 
 
 
